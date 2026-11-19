@@ -1,0 +1,27 @@
+# PHP/runtime secrets and local-only overrides
+/backend-php/.env
+/backend-php/.env.*
+!/backend-php/.env.example
+/backend-php/config/local.php
+*.pem
+*.key
+*.p12
+
+# Local APK builds and LAN update manifest
+/updates/*.apk
+/updates/latest.json
+
+# User-uploaded content: keep rules, never commit real reports/photos
+/backend-php/uploads/*
+!/backend-php/uploads/.htaccess
+!/backend-php/uploads/.gitkeep
+
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+/.idea/
+/.vscode/
+
+# Local database snapshots and local-only notes
+/database-backup/
+/INFO-WEB.txt
