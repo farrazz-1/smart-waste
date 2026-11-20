@@ -1,28 +1,112 @@
-# Smart Waste — Portal Warga
+# Waste 2 — Smart Waste
 
-Website warga untuk membuat laporan sampah dan memantau tindak lanjutnya. Website dan aplikasi Android operasional memakai PHP REST API dan database MySQL yang sama.
+Smart Waste memakai satu alur data bersama:
 
-## Fitur website
+`Website User → PHP REST API → MySQL XAMPP ← PHP REST API ← Android Admin/Petugas`
 
-- Daftar, masuk, dan kelola profil warga.
-- Kirim laporan dengan jenis sampah, perkiraan berat, lokasi, deskripsi, dan foto.
-- Lihat ringkasan, tren laporan, progres tiap laporan, riwayat status, petugas, kendaraan, dan tujuan TPA yang sudah ditetapkan.
-- Edit atau batalkan laporan sesuai statusnya.
-- Sinkronkan perubahan status dari aplikasi operasional secara berkala.
+Website dipakai masyarakat untuk membuat dan memantau laporan. Android dipakai Admin untuk verifikasi dan operasional, serta Petugas untuk menjalankan penugasan.
 
-## Struktur
+Kode dipisah berdasarkan peran: `frontend/` untuk website, `backend-php/` untuk API dan database bootstrap, `android-app/` untuk aplikasi Admin/Petugas, serta `docs/` dan `tools/` untuk kontrak/panduan dan validasi. Lihat [panduan Android](android-app/README.md), [peta struktur](docs/structure.md), [kontrak API](docs/api-contract.md), dan [alur pengembangan](docs/development-workflow.md).
 
-- `frontend/` — halaman, stylesheet, JavaScript, dan aset portal warga.
-- `backend-php/` — REST API, konfigurasi database, bootstrap schema, dan layanan backend.
-- `backend-php/database/schema.sql` — referensi struktur database.
-- `docs/` — kontrak API dan panduan pengembangan.
-- `tools/` — skrip bantu proyek.
+## Menjalankan di Windows
 
-## Menjalankan secara lokal dengan XAMPP
+1. Buka XAMPP, nyalakan **Apache** dan **MySQL**.
+2. Jalankan `START-Waste2.bat`, atau buka `http://localhost/Waste2/frontend/index.html`.
+   Folder proyek di XAMPP mengarah langsung ke kode aktif. Jalankan `OPEN-SMART-WASTE-CHROME.bat` dari folder proyek untuk membuka website melalui Chrome.
+3. Default XAMPP memakai MySQL `127.0.0.1:3306`, database `smart_waste`, user `root`, password kosong. Database dan schema bootstrap dibuat saat API pertama kali dipanggil.
+   Untuk konfigurasi lokal, salin `backend-php/.env.example` menjadi `backend-php/.env`; PHP akan membaca file itu, sementara environment Windows yang sudah ada tetap lebih diprioritaskan. `.env` diabaikan Git dan ditolak oleh Apache.
+4. Biarkan Apache dan MySQL tetap aktif pada laptop server. PHP API berjalan di port `8080`; perangkat lain harus tersambung ke Wi-Fi yang sama. Buka website dari laptop server lewat `http://localhost/Waste2/frontend/index.html`, atau dari perangkat lain lewat `http://IP_WIFI_SERVER/Waste2/frontend/index.html`. Website memakai nama host dari alamat yang dibuka, jadi tidak bergantung pada IP Wi-Fi yang bisa berubah. MySQL tetap hanya di laptop server dan tidak dibuka ke Wi-Fi.
+   Android mencoba alamat server yang tersimpan lalu mencari API di jaringan lokal jika IP berubah. Untuk emulator, gunakan IP Wi-Fi laptop server, bukan `10.0.2.2` jika database berada di laptop lain.
+5. Buka proyek Android dengan menjalankan `android-app/OPEN-AndroidStudio-SmartWaste.bat` atau memilih folder `android-app/` di Android Studio.
 
-1. Letakkan folder proyek pada document root Apache dengan nama/path `Waste2`.
-2. Nyalakan Apache dan MySQL. Frontend memakai API default `http://<host>:8080/Waste2/backend-php/index.php`; sesuaikan port atau path API di `frontend/js/app.js` jika konfigurasi Apache berbeda.
-3. Salin `backend-php/.env.example` menjadi `backend-php/.env`, lalu atur koneksi database lokal. Jangan gunakan konfigurasi database lokal untuk server publik.
-4. Buka `http://localhost:8080/Waste2/frontend/index.html` di Chrome. Endpoint pemeriksaan API: `http://localhost:8080/Waste2/backend-php/index.php/health`.
+Folder web sudah dipasang sebagai junction:
 
-Backend menyiapkan schema saat pertama kali digunakan. Untuk jaringan atau server produksi, gunakan kredensial database tersendiri dan jangan commit `.env`, foto laporan, atau salinan database.
+```text
+C:\xampp\htdocs\Waste2  ->  folder Waste 2 ini
+```
+
+Endpoint pemeriksaan:
+
+- Web user lokal: `http://localhost/Waste2/frontend/index.html`
+- Health API lokal: `http://localhost/Waste2/backend-php/index.php/health`
+- Web user Wi-Fi: `http://<IP-Wi-Fi-laptop-server>/Waste2/frontend/index.html`
+- Health API Wi-Fi: `http://<IP-Wi-Fi-laptop-server>/Waste2/backend-php/index.php/health`
+- phpMyAdmin lokal: `http://localhost/phpmyadmin/`
+
+API entry point sengaja tetap di `backend-php/index.php` supaya website dan Android tidak kehilangan alamat server saat file internal dirapikan. Schema untuk inspeksi/import manual berada di `backend-php/database/schema.sql`; runtime memakai migrasi idempoten di `backend-php/config/database.php` agar data lama tetap dipertahankan.
+
+## Akun dan login
+
+Semua akun masuk memakai username dan kata sandi. Google OAuth tidak digunakan.
+
+- Website menerima role `user` untuk registrasi dan laporan warga.
+- Android menerima role `admin` dan `petugas`; login silang ditolak.
+- Admin membuat akun Petugas melalui menu Operasional. Pendaftaran publik hanya membuat akun warga.
+- Pendaftaran akun baru dan penggantian kata sandi memerlukan minimal 8 karakter. Kata sandi akun lama tidak berubah.
+- Login dibatasi setelah 5 kata sandi salah untuk pasangan identitas akun dan alamat IP yang sama; percobaan baru dapat dilakukan kembali setelah 15 menit.
+- Untuk database baru, isi `SMARTWASTE_BOOTSTRAP_ADMIN_PASSWORD` di `backend-php/.env` sebelum API pertama kali dijalankan. Seeder membuat akun `admin` hanya jika kata sandi minimal 8 karakter tersedia; akun yang sudah ada tidak diubah.
+- Username `admin` dicadangkan dan tidak dapat dipakai saat pendaftaran warga.
+- Akun demo warga `user` / `12345` dan laporan contoh hanya dibuat jika `SMARTWASTE_SEED_DEMO_USER=1` disetel untuk demo lokal. Biarkan `0` untuk penggunaan biasa; jangan memakai kredensial demo pada deployment.
+- Migrasi tidak mereset kata sandi database lama. Jika Admin lama masih memakai kata sandi demo, ganti lewat aplikasi sebelum membuka server ke jaringan.
+
+Pengaturan koneksi database XAMPP dapat memakai `SMARTWASTE_DB_HOST`, `SMARTWASTE_DB_PORT`, `SMARTWASTE_DB_NAME`, `SMARTWASTE_DB_USER`, dan `SMARTWASTE_DB_PASSWORD` melalui konfigurasi environment lokal. Jangan commit file `.env` atau kredensial.
+
+## Fitur inti
+
+### Website — User
+
+- Register, login, dan logout.
+- Kirim laporan foto, jenis sampah, lokasi, berat, deskripsi, dan tanggal.
+- Melihat status `Menunggu Verifikasi`, `Diproses`, `Ditugaskan`, `Diangkut`, `Selesai`, atau `Ditolak`.
+- Riwayat laporan dan timeline status.
+- Melihat petugas, plat kendaraan, TPA tujuan, dan catatan operasional yang sudah ditetapkan dari aplikasi pada ringkasan progres dan detail laporan. Data diambil dari laporan/API yang sama dan diperbarui bersama sinkronisasi status.
+- Melihat foto bukti lokasi dan foto penyelesaian yang dikirim Petugas melalui aplikasi, termasuk status pemeriksaan dan catatan Admin.
+- Mendapat toast pembaruan ketika status laporan berubah di aplikasi saat portal sedang terbuka (sinkronisasi berkala 15 detik).
+- Profil, edit data kontak, dan ganti password.
+- Sinkronisasi status otomatis setiap 15 detik.
+
+### Android — Admin
+
+- Login admin.
+- Dashboard total user, laporan, menunggu, diproses, selesai, dan ditolak.
+- Lihat detail laporan, lokasi, deskripsi, dan buka foto.
+- Pantau laporan warga, tinjau bukti penyelesaian, dan setujui/tolak proses perbaikan armada.
+- Kelola akun Petugas, catatan Admin, statistik, dan kinerja operasional.
+- Statistik per bulan, jenis sampah, berat, dan laporan selesai.
+- Refresh otomatis setiap 15 detik.
+
+### Android — Petugas
+
+- Login dengan akun petugas yang dibuat Admin.
+- Menangani antrean laporan: pilih kendaraan dan TPA, atau tolak dengan alasan.
+- Memperbarui alur `Ditugaskan → Diangkut → Selesai` dengan bukti foto untuk konfirmasi penyelesaian.
+- Mengelola armada/TPA operasional dan melaporkan kerusakan kendaraan untuk persetujuan Admin.
+- Melihat kinerja serta mengarsipkan dan memulihkan tugas.
+- Tidak dapat membuka menu administrasi atau mengubah penugasan petugas lain.
+
+## Struktur database utama
+
+- `users` — akun user dan role.
+- `admin` — profil admin yang tersinkron dengan akun admin.
+- `sampah` — laporan sampah user.
+- `riwayat_status` — jejak perubahan status oleh admin.
+- `auth_tokens` — sesi login API.
+
+Tabel pendukung seperti `petugas`, `kendaraan`, `tpa`, dan `laporan_harian` tetap dipertahankan supaya database XAMPP lama tidak kehilangan data saat migrasi. Setiap perubahan skema baru harus ditambahkan ke bootstrap runtime dan referensi `backend-php/database/schema.sql`; untuk data yang sudah dipakai, gunakan migrasi yang bisa dijalankan berulang tanpa menghapus data.
+
+## Android lewat Wi-Fi yang sama
+
+Aplikasi Android mengakses data melalui REST API PHP di Apache; aplikasi tidak terhubung langsung ke MySQL. Untuk HP fisik, jalankan `scripts/auto-deploy-phone.ps1` dari folder proyek Android. Skrip mendeteksi IP Wi-Fi laptop, membangun APK dengan alamat API LAN, lalu menerbitkan APK dan `updates/latest.json` ke folder web ini. Jika ada satu HP tersambung USB, APK juga dipasang otomatis.
+
+Perangkat perlu berada di jaringan lokal yang sama. Jangan membuka port MySQL `3306` ke Wi-Fi; MySQL laptop server sekarang hanya bind ke `127.0.0.1`. Apache memakai TCP port `80`. Aturan firewall Apache yang sudah ada berada pada profil Public dan mencakup alamat/port luas; penyempitan ke `LocalSubnet` memerlukan hak Administrator. Android pada laptop lain harus memakai IP Wi-Fi laptop server, bukan `10.0.2.2`.
+
+APK yang sudah memiliki pemeriksa update akan mengecek versi saat aplikasi dibuka dan berkala ketika aplikasi aktif. Android tetap meminta pengguna menyetujui pemasangan APK; versi lama perlu dipasang manual sekali agar mendapat fitur pemeriksaan update. Gunakan DHCP reservation di router supaya IP laptop tetap sama.
+
+## Validasi lokal
+
+```powershell
+.\tools\validate-web.ps1
+.\tools\validate-web.ps1 -CheckApi  # Apache + MySQL harus menyala
+```
+
+Tes Android dijalankan dari folder project Android dengan `.\gradlew.bat :app:testDebugUnitTest :app:lintDebug :app:assembleDebug`.

@@ -24,7 +24,7 @@ Waste 2/
 
 ## Kontrak yang jangan diputus
 
-- Alamat entry point tetap `backend-php/index.php`; URL ini dipakai `frontend/js/app.js` dan Android.
+- Alamat entry point tetap `backend-php/index.php`; URL ini dipakai `frontend/assets/js/data.js` dan Android.
 - Folder website tetap `frontend/`, karena URL lokalnya `/Waste2/frontend/index.html`.
 - Foto laporan tetap disimpan di `backend-php/uploads/` agar URL foto yang dikirim API tetap valid.
 - Database adalah MySQL `smart_waste`. Perubahan tabel harus menjaga data instalasi lama; jangan menghapus atau mengganti tabel tanpa migrasi.

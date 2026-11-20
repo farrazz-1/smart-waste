@@ -25,7 +25,7 @@ if (-not $node) {
     throw 'Node.js tidak ditemukan; diperlukan hanya untuk pemeriksaan sintaks JavaScript.'
 }
 
-$frontendScript = Join-Path $webRoot 'frontend\js\app.js'
+$frontendScript = Join-Path $webRoot 'frontend\assets\js\app.js'
 & $node.Source --check $frontendScript
 if ($LASTEXITCODE -ne 0) {
     throw "Sintaks JavaScript gagal: $frontendScript"
