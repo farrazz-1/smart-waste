@@ -90,7 +90,7 @@ function authUser(PDO $pdo): ?array
         return null;
     }
     $stmt = $pdo->prepare(
-        'SELECT u.id, u.username, u.email, u.nama, u.foto_profil, u.role, u.aktif, u.is_super_admin
+        'SELECT u.id, u.username, u.email, u.nama, u.foto_profil, u.role, u.aktif, u.is_super_admin, u.dibuat_pada
          FROM auth_tokens t JOIN users u ON u.id = t.user_id
          WHERE t.token_hash = ? AND t.expires_at > NOW() LIMIT 1'
     );
@@ -141,6 +141,7 @@ function publicUser(array $user): array
         'role' => (string) $user['role'],
         'active' => (bool) $user['aktif'],
         'is_super_admin' => (bool) ($user['is_super_admin'] ?? false),
+        'created_at' => (string) ($user['dibuat_pada'] ?? ''),
     ];
 }
 
@@ -1087,7 +1088,7 @@ try {
             fail('Terlalu banyak percobaan masuk. Coba lagi dalam 15 menit.', 429);
         }
         $stmt = $pdo->prepare(
-            'SELECT id, username, email, password_hash, nama, foto_profil, role, aktif, is_super_admin FROM users
+            'SELECT id, username, email, password_hash, nama, foto_profil, role, aktif, is_super_admin, dibuat_pada FROM users
              WHERE (username = ? OR email = ?) LIMIT 1'
         );
         $stmt->execute([$identity, $identity]);
@@ -1147,7 +1148,7 @@ try {
         );
         $stmt->execute([$username, $email, password_hash($password, PASSWORD_DEFAULT), $name]);
         $id = (int) $pdo->lastInsertId();
-        $newUser = $pdo->prepare('SELECT id, username, email, nama, foto_profil, role, aktif FROM users WHERE id = ?');
+        $newUser = $pdo->prepare('SELECT id, username, email, nama, foto_profil, role, aktif, dibuat_pada FROM users WHERE id = ?');
         $newUser->execute([$id]);
         $user = $newUser->fetch();
         respond(['message' => 'Registrasi user berhasil.', 'user' => publicUser($user)], 201);
@@ -1192,7 +1193,7 @@ try {
             } elseif ($user['role'] === 'admin') {
                 $pdo->prepare('UPDATE admin SET nama_admin = ? WHERE user_id = ?')->execute([$name, $user['id']]);
             }
-            $fresh = $pdo->prepare('SELECT id, username, email, nama, foto_profil, role, aktif, is_super_admin FROM users WHERE id = ?');
+            $fresh = $pdo->prepare('SELECT id, username, email, nama, foto_profil, role, aktif, is_super_admin, dibuat_pada FROM users WHERE id = ?');
             $fresh->execute([$user['id']]);
             $updatedUser = $fresh->fetch();
             $pdo->commit();
@@ -1213,7 +1214,7 @@ try {
         }
         $pdo->prepare('UPDATE users SET foto_profil = ? WHERE id = ?')->execute([$photo, $user['id']]);
         $fresh = $pdo->prepare(
-            'SELECT id, username, email, nama, foto_profil, role, aktif, is_super_admin FROM users WHERE id = ?'
+            'SELECT id, username, email, nama, foto_profil, role, aktif, is_super_admin, dibuat_pada FROM users WHERE id = ?'
         );
         $fresh->execute([$user['id']]);
         $updatedUser = $fresh->fetch();

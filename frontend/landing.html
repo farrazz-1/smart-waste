@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartWaste — Portal Warga | Laporkan sampah, pantau penanganan</title>
+  <meta name="description" content="Portal warga SmartWaste untuk melaporkan kondisi sampah beserta foto dan lokasi, serta memantau status penanganan sampai selesai.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=1.6.5">
+  <link rel="stylesheet" href="assets/css/landing.css?v=1.0.16">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%234d8534'/%3E%3Cpath d='M20 42c0-12 9-22 24-24 2 15-7 26-19 26' fill='none' stroke='%23f2f8ea' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M22 46c4-10 10-16 19-20' fill='none' stroke='%23f2f8ea' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="landing">
+
+    <!-- NAV -->
+    <nav class="land-nav">
+      <a class="brand" href="landing.html" aria-label="SmartWaste, ke beranda">
+        <span class="brand-mark" data-art="mark"></span>
+        <span class="brand-name">SmartWaste</span>
+      </a>
+      <div class="land-nav-links">
+        <a href="#fitur">Fitur</a>
+        <a href="#cara-kerja">Cara kerja</a>
+        <a href="#status">Status laporan</a>
+      </div>
+      <div class="land-nav-cta">
+        <a href="index.html#/masuk" class="btn btn--ghost btn--sm">Masuk</a>
+        <a href="index.html#/daftar" class="btn btn--primary btn--sm">Buat akun</a>
+      </div>
+    </nav>
+
+<main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1>Laporkan sampah di sekitarmu,<br><span>pantau sampai selesai.</span></h1>
+          <p class="lead">SmartWaste Portal Warga membantu kamu mengirim laporan kondisi sampah lengkap dengan foto dan lokasi, lalu mengikuti tindak lanjutnya sampai selesai. Status, catatan, dan rincian penanganan tersedia di satu tempat.</p>
+          <div class="hero-trust">
+            <span><span class="ic" data-icon="camera"></span> Foto kondisi awal wajib</span>
+            <span><span class="ic" data-icon="map-pin"></span> Lokasi manual atau otomatis</span>
+            <span><span class="ic" data-icon="download"></span> Ekspor CSV</span>
+          </div>
+        </div>
+        <div class="hero-photo-wrap">
+          <img src="assets/img/smartphone-recycling.jpg?v=1" alt="Ponsel dengan pesan daur ulang di atas tas jaring, simbol keberlanjutan" class="hero-photo" loading="eager">
+        </div>
+        <div class="hero-photo-wrap">
+          <img src="assets/img/garbage-truck.jpg?v=1" alt="Truk pengangkut sampah di jalan kota" class="hero-photo" loading="eager">
+        </div>
+        <div class="hero-mock" aria-hidden="true">
+          <div class="hero-mock-head">
+            <strong>Ringkasan</strong>
+            <span>Portal Warga</span>
+          </div>
+          <div class="mock-kpis">
+            <div class="mock-kpi"><span>Total laporan</span><strong>15</strong></div>
+            <div class="mock-kpi"><span>Selesai</span><strong>10</strong></div>
+            <div class="mock-kpi"><span>Menunggu</span><strong>1</strong></div>
+            <div class="mock-kpi"><span>Est. berat 6 bln</span><strong>225 kg</strong></div>
+          </div>
+          <div class="mock-row">
+            <span class="dot"></span>
+            <div class="txt"><strong>Plastik · SW-261118-015</strong><small>Jl. Cikini Raya · 12.5 kg</small></div>
+            <span class="pill">Menunggu</span>
+          </div>
+          <div class="mock-row">
+            <span class="dot" style="background:#356d3e"></span>
+            <div class="txt"><strong>Organik · SW-261116-014</strong><small>Taman Menteng · 8 kg</small></div>
+            <span class="pill" style="border-color:#cfe6c9;color:#356d3e">Selesai</span>
+          </div>
+          <div class="mock-row">
+            <span class="dot" style="background:#356a9c"></span>
+            <div class="txt"><strong>Kertas · SW-261112-013</strong><small>Pasar Minggu · 25 kg</small></div>
+            <span class="pill" style="border-color:#cfe0f2;color:#356a9c">Diproses</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS STRIP -->
+    <section class="section" style="padding:0 28px 0;">
+      <div class="section-inner">
+        <div class="stats-strip">
+          <div class="stat"><strong>7</strong><span>Jenis sampah yang dapat dilaporkan</span></div>
+          <div class="stat"><strong>4</strong><span>Tahap penanganan transparan</span></div>
+          <div class="stat"><strong>CSV</strong><span>Ekspor riwayat laporan</span></div>
+          <div class="stat"><strong>5 MB</strong><span>Batas ukuran foto laporan</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FITUR -->
+    <section class="section" id="fitur">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">Fitur utama</span>
+          <h2>Semua yang warga butuhkan untuk melapor dan memantau.</h2>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-ic"><span class="icon-only" data-icon="camera"></span></span>
+            <h3>Laporan dengan foto &amp; lokasi</h3>
+            <p>Jenis sampah, berat opsional, lokasi (manual atau GPS), deskripsi, tanggal, dan foto kondisi awal wajib. Foto dikompresi di browser.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-ic"><span class="icon-only" data-icon="grid"></span></span>
+            <h3>Ringkasan &amp; tren</h3>
+            <p>Total laporan, jumlah per status, tren 6 bulan, perkiraan berat 6 bulan, persentase selesai, dan komposisi jenis sampah.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-ic"><span class="icon-only" data-icon="truck"></span></span>
+            <h3>Pantau progres</h3>
+            <p>Pilih salah satu laporan dan lihat tahap: Diterima, Ditangani, Diangkut, Selesai — lengkap dengan berat individual.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-ic"><span class="icon-only" data-icon="clock"></span></span>
+            <h3>Riwayat &amp; pencarian</h3>
+            <p>Filter status, pencarian kata kunci, rentang tanggal, muat ulang, dan unduh CSV data laporan milikmu.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-ic"><span class="icon-only" data-icon="edit"></span></span>
+            <h3>Edit &amp; batalkan</h3>
+            <p>Koreksi atau batalkan laporan selama masih Menunggu Verifikasi. Data tetap tersimpan di riwayat.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-ic"><span class="icon-only" data-icon="user"></span></span>
+            <h3>Profil &amp; keamanan</h3>
+            <p>Ubah nama, foto profil, dan password. Ganti password mengakhiri sesi dan meminta masuk ulang.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARA KERJA -->
+    <section class="section" id="cara-kerja" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">Cara kerja</span>
+          <h2>Empat langkah dari laporan sampai selesai.</h2>
+          <p>Warga cukup membuat laporan; verifikasi dan penugasan dilakukan tim operasional melalui aplikasi Android.</p>
+        </div>
+        <div class="steps">
+          <div class="step-card">
+            <span class="step-num">1</span>
+            <h3>Buat akun warga</h3>
+            <p>Daftar dengan nama, username, dan password. Tanpa email. Sesi dipulihkan saat portal dibuka kembali.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">2</span>
+            <h3>Kirim laporan</h3>
+            <p>Isi jenis, lokasi, tanggal, dan foto kondisi awal. Draft teks tersimpan sementara di browser.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">3</span>
+            <h3>Tunggu verifikasi</h3>
+            <p>Laporan berstatus Menunggu Verifikasi. Tim operasional memeriksa dan menugaskan petugas.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">4</span>
+            <h3>Pantau progres</h3>
+            <p>Lihat tahap Ditangani, Diangkut, Selesai beserta catatan, petugas, kendaraan, dan TPA bila tersedia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATUS -->
+    <section class="section" id="status">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">Status laporan</span>
+          <h2>Tahap penanganan yang transparan.</h2>
+          <p>Pantau perkembangan laporanmu dari tahap verifikasi hingga penanganan selesai.</p>
+        </div>
+        <div class="pipeline">
+          <div class="pipeline-stages">
+            <div class="pipe-stage is-done">
+              <span class="pipe-dot"><span class="icon-only" data-icon="check"></span></span>
+              <h3>Diterima</h3>
+              <p>Menunggu Verifikasi — laporan baru masuk dan belum ditangani.</p>
+            </div>
+            <div class="pipe-stage is-done">
+              <span class="pipe-dot"><span class="icon-only" data-icon="users"></span></span>
+              <h3>Ditangani</h3>
+              <p>Diproses / Ditugaskan — petugas mulai menangani laporan.</p>
+            </div>
+            <div class="pipe-stage is-done">
+              <span class="pipe-dot"><span class="icon-only" data-icon="truck"></span></span>
+              <h3>Diangkut</h3>
+              <p>Sampah diangkut menuju TPA.</p>
+            </div>
+            <div class="pipe-stage is-done">
+              <span class="pipe-dot"><span class="icon-only" data-icon="check-circle"></span></span>
+              <h3>Selesai</h3>
+              <p>Penanganan tuntas dengan bukti penyelesaian.</p>
+            </div>
+          </div>
+          <div class="pipe-note">
+            <span><span class="dot" style="background:#a64a3e"></span> Ditolak — laporan tidak dapat ditindaklanjuti (alasan ditampilkan)</span>
+            <span><span class="dot" style="background:#707871"></span> Dibatalkan warga — dibatalkan oleh warga sebelum verifikasi</span>
+            <span><span class="dot" style="background:#356a9c"></span> Riwayat status dan catatan petugas tersedia di detail laporan</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">Pertanyaan umum</span>
+          <h2>Hal yang sering ditanyakan.</h2>
+        </div>
+        <div class="faq">
+          <div class="faq-item">
+            <h3>Apakah perlu email untuk mendaftar?</h3>
+            <p>Tidak. Pendaftaran hanya meminta nama lengkap, username (minimal 3 karakter), dan password (minimal 8 karakter).</p>
+          </div>
+          <div class="faq-item">
+            <h3>Kapan laporan bisa diedit atau dibatalkan?</h3>
+            <p>Hanya saat status masih Menunggu Verifikasi. Setelah diverifikasi, backend menolak perubahan.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Apakah foto wajib?</h3>
+            <p>Ya, foto kondisi awal wajib untuk mengirim laporan (JPG, PNG, WebP, maks. 5 MB). Draft teks tersimpan, tetapi foto harus dipilih ulang setelah halaman dimuat ulang.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Bagaimana cara mengetahui status terbaru?</h3>
+            <p>Status terbaru tampil di halaman Ringkasan. Buka detail laporan untuk melihat progres, catatan, dan bukti penanganan dari petugas.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Apakah data laporan aman?</h3>
+            <p>Warga hanya dapat membaca atau mengubah laporan miliknya. Pemeriksaan role dan kepemilikan dilakukan oleh backend, bukan hanya dengan menyembunyikan menu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="padding-top:0;">
+      <div class="section-inner">
+        <div class="cta-banner">
+          <div>
+            <h3>Siap menjaga lingkunganmu?</h3>
+            <p>Buat akun warga dan kirim laporan pertamamu. Setiap laporan membantu petugas bergerak lebih cepat.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="index.html#/daftar" class="btn btn--primary btn--lg">Buat akun warga</a>
+            <a href="index.html#/masuk" class="btn btn--ghost btn--lg">Masuk</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <a class="brand" href="landing.html">
+          <span class="brand-mark" data-art="mark"></span>
+          <span class="brand-name">SmartWaste</span>
+        </a>
+        <span>Portal Warga · Smart Waste. Data &amp; status bersumber dari API bersama aplikasi operasional.</span>
+        <span>© 2026 SmartWaste</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="assets/js/icons.js?v=1.3.0"></script>
+  <script>if (window.hydrateIcons) hydrateIcons(); if (window.hydrateArt) hydrateArt();</script>
+</body>
+</html>

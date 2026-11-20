@@ -1,14 +1,14 @@
 # Kontrak REST API Smart Waste
 
-Website warga dan aplikasi Android Admin/Petugas memakai PHP REST API dan database MySQL yang sama. Alamat server LAN saat ini `192.168.1.21:8080`:
+Website warga dan aplikasi Android Admin/Petugas memakai PHP REST API dan database MySQL yang sama. Alamat API memakai hostname server dan port Apache yang dikonfigurasi:
 
 ```text
-http://192.168.1.21:8080/Waste2/backend-php/index.php
+http://<HOST_SERVER>:8080/Waste2/backend-php/index.php
 ```
 
-Website memakai API tersebut sebagai default. Aplikasi Android di folder `android-app/` juga memakai host `192.168.1.21` sebagai default; untuk mengubahnya, set `apiHost` di `android-app/app/lan.properties` atau build dengan `-PsmartWasteApiHost=IP_SERVER`. Aplikasi pada HP fisik mencoba menemukan API di jaringan Wi-Fi bila IP default tidak merespons. Jangan sambungkan klien langsung ke MySQL.
+Website membentuk URL API dari hostname halaman dan port `8080` sebagai default. Aplikasi Android di folder `android-app/` dapat diberi alamat server melalui `android-app/app/lan.properties` atau build dengan `-PsmartWasteApiHost=HOST_SERVER`. Aplikasi pada HP fisik mencoba menemukan API di jaringan Wi-Fi bila alamat awal tidak merespons. Jangan sambungkan klien langsung ke MySQL.
 
-Untuk pengembangan website dengan XAMPP lokal, arahkan API ke `http://localhost/Waste2/backend-php/index.php` dengan menetapkan `window.SMART_WASTE_API` sebelum `frontend/js/app.js` dimuat. Bila alamat server LAN berubah, perbarui host default website atau tetapkan `window.SMART_WASTE_API`.
+Untuk pengembangan website dengan XAMPP lokal di port `8080`, API default adalah `http://localhost:8080/Waste2/backend-php/index.php`. Bila alamat server atau port berbeda, tetapkan `window.SMART_WASTE_API` sebelum `frontend/assets/js/data.js` dimuat.
 
 Untuk request JSON gunakan `Content-Type: application/json`; endpoint terlindungi menerima `Authorization: Bearer <token>`. Foto laporan dikirim sebagai `multipart/form-data` pada field `foto` (maksimal 5 MB; JPG, PNG, WEBP, GIF).
 
@@ -64,7 +64,7 @@ Semua respons error berbentuk JSON dengan `message` dan HTTP status yang sesuai.
 
 Status domain: `menunggu_verifikasi`, `diproses`, `ditugaskan`, `diangkut`, `selesai`, `ditolak`. Setiap perubahan status yang sah harus dicatat di `riwayat_status`.
 
-Saat mengubah endpoint atau payload, perbarui client Android `data/remote/SmartWasteApi.kt`, frontend `frontend/js/app.js`, dan tabel ini. Hindari mengganti path publik tanpa kompatibilitas lama atau pembaruan kedua client dalam satu perubahan.
+Saat mengubah endpoint atau payload, perbarui client Android `data/remote/SmartWasteApi.kt`, frontend `frontend/assets/js/data.js`, dan tabel ini. Hindari mengganti path publik tanpa kompatibilitas lama atau pembaruan kedua client dalam satu perubahan.
 
 
 Alur perbaikan armada: Petugas mencatat penyebab dan kronologi kerusakan; kendaraan langsung ditandai `Rusak` agar tidak menerima penugasan baru. Admin menyetujui atau menolak laporan. Setelah disetujui, Petugas memulai dan mencatat progres, lalu meminta pemeriksaan. Admin dapat menyetujui hasil sehingga kendaraan kembali `Baik`, atau meminta perbaikan ulang. Laporan dan jejak tindakan disimpan pada `kendaraan_perbaikan` serta `kendaraan_perbaikan_riwayat`.

@@ -10,6 +10,11 @@
 # Local APK builds and LAN update manifest
 /updates/*.apk
 /updates/latest.json
+/frontend-legacy/
+/smartwaste-*.zip
+/output/
+/tmp/
+*.log
 
 # User-uploaded content: keep rules, never commit real reports/photos
 /backend-php/uploads/*
@@ -21,7 +26,10 @@
 Thumbs.db
 /.idea/
 /.vscode/
-
 # Local database snapshots and local-only notes
 /database-backup/
 /INFO-WEB.txt
+**/build/
+/.gradle/
+/.kotlin/
+/local.properties
